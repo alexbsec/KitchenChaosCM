@@ -61,7 +61,9 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     /// <summary>
     /// Gets the current kitchen object
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// The current kitchen object
+    /// </returns>
     public KitchenObject GetKitchenObject()
     {
         return _kitchenObject;
