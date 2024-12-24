@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class KitchenObject : MonoBehaviour
+{
+    /// <summary>
+    /// Reference to the kitchen scriptable object
+    /// </summary>
+    [SerializeField] private KitchenScriptableObject _kitchenSO;
+    
+    /// <summary>
+    /// Reference to clear counter this kitchen object belongs to
+    /// </summary>
+    private IKitchenObjectParent _kitchenObjectParent;
+    
+    /// <summary>
+    /// The kitchen scriptable object getter
+    /// </summary>
+    public KitchenScriptableObject KitchenSO => _kitchenSO;
+
+    /// <summary>
+    /// Sets the kitche object parent for this kitchen object
+    /// </summary>
+    /// <param name="clearCounter">
+    /// The kitchen parent object to be set
+    /// </param>
+    public void SetKitchenObjectParent(IKitchenObjectParent parent)
+    {
+        // Clears parent clear counter (i.e., previous owner of this kitchen object)
+        if (_kitchenObjectParent != null)
+        {
+            _kitchenObjectParent.ClearKitchenObject();
+        }
+        
+        // Sets the new clear counter to this kitche object
+        _kitchenObjectParent = parent;
+        if (_kitchenObjectParent.HasKitchenObject())
+        {
+            Debug.LogError("Assigned counter already has an object on top of it!");
+        }
+        _kitchenObjectParent.SetKitchenObject(this);
+        
+        // Sets the parent position to the new clear counter 
+        // top point and makes local position to local origin
+        transform.parent = _kitchenObjectParent.GetKitchenObjectFollowTransform();
+        transform.localPosition = Vector3.zero;
+    }
+
+    /// <summary>
+    /// Gets current kitchen parent object owner of this
+    /// kitchen object
+    /// </summary>
+    /// <returns>
+    /// The current kitchen parent object
+    /// </returns>
+    public IKitchenObjectParent GetKitchenObjectParent()
+    {
+        return _kitchenObjectParent;
+    }
+}

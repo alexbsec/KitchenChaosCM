@@ -1,0 +1,26 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Asset meta data should be tracked
+# but the asset database should not
+/[Aa]ssets/AssetStoreTools*
+
+# Auto-generated files
+*.csproj
+*.unityproj
+*.sln
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Unity Cloud Build
+*.aps
+*.apples
+
