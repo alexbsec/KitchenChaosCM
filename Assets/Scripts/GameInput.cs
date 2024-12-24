@@ -6,6 +6,12 @@ using UnityEngine;
 public class GameInput : MonoBehaviour
 {
 	/// <summary>
+	/// Event handler for alternate intaraction (cutting board, cooking etc)
+	/// input
+	/// </summary>
+	public event EventHandler OnInteractAlternateAction;
+	
+	/// <summary>
 	/// Event handler for interaction input
 	/// </summary>
 	public event EventHandler OnInteractAction;
@@ -24,6 +30,18 @@ public class GameInput : MonoBehaviour
 		_playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
         _playerInputActions.Player.Interact.performed += Interact_performed;
+        _playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
+	}
+
+    /// <summary>
+    /// Listens and fires alternate interaction event
+    /// </summary>
+    /// <param name="context">
+    /// The context
+    /// </param>
+	private void InteractAlternate_performed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+	{
+		OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
 	}
 
     /// <summary>

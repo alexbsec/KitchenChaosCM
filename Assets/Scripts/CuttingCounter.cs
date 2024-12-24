@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CuttingCounter : BaseCounter
 {
+    [SerializeField] private KitchenScriptableObject _kitchenSO;
+    
     /// <summary>
     /// Counter-player interaction
     /// </summary>
@@ -22,4 +24,14 @@ public class CuttingCounter : BaseCounter
             return;
         }
     }
+
+    public override void InteractAlternate(Player player)
+    {
+        if (HasKitchenObject())
+        {
+            GetKitchenObject().SelfDestroy();
+            KitchenObject.SpawnKitchenObject(_kitchenSO, this);
+        }
+    }
+    
 }

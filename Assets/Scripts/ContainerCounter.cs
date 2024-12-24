@@ -22,12 +22,8 @@ public class ContainerCounter : BaseCounter
         {
             return;
         }
-        // Instantiate the kitchen object on top of the counter
-        Transform kitchenObjectTransform = Instantiate(_kitchenSO.prefab);
-            
-        // Assings player as the owner of the object
-        kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(player);
-        
+
+        KitchenObject.SpawnKitchenObject(_kitchenSO, player);
         OnPlayerGrabObject?.Invoke(this, EventArgs.Empty);
     }
 }

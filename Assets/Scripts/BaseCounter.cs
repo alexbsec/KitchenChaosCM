@@ -13,12 +13,28 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     /// The actual object (i.e. tomato, cheese, patty...)
     /// </summary>
     protected KitchenObject _kitchenObject;
-    
+
     /// <summary>
-    /// Base interact function
+    /// Virtual interact method
     /// </summary>
-    /// <param name="player"></param>
-    public virtual void Interact(Player player) {}
+    /// <param name="player">
+    /// The player object
+    /// </param>
+    public virtual void Interact(Player player)
+    {
+        Debug.LogWarning("Interact not implemented");
+    }
+
+    /// <summary>
+    /// Virtual alternate interact method
+    /// </summary>
+    /// <param name="player">
+    /// The player object
+    /// </param>
+    public virtual void InteractAlternate(Player player)
+    {
+        Debug.LogWarning("InteractAlternate not implemented");
+    }
     
     /// <summary>
     /// Gets the counter top transform for referencing
