@@ -271,6 +271,14 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         return _isWalking;
     }
 
+    public void DestroyKitchenObject()
+    {
+        if (_kitchenObject != null)
+        {
+            _kitchenObject.SelfDestroy();
+        }
+    }
+
     /// <summary>
     /// Gets the counter top transform for referencing
     /// </summary>

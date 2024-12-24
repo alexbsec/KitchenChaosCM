@@ -43,6 +43,7 @@ public class CuttingCounter : BaseCounter
             // private variables
             GetKitchenObject().SetKitchenObjectParent(player);
             _currentKitchenSO = null;
+            _isFirstFire = true;
             return;
         }
 
