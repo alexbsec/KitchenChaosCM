@@ -14,7 +14,6 @@ public class StoveCounter : BaseCounter, IHasProgress
     [SerializeField] private CookingRecipeScriptableObject[] _cookingRecipeSOArray;
     private KitchenScriptableObject _currentKitchenSO;
     private float _cookingProgress;
-    private float _lastCookingProgress = 0.0f;
     
     private const float INITIAL_PROGRESS = 0.0f;
 
