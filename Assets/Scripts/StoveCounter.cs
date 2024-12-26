@@ -81,9 +81,15 @@ public class StoveCounter : BaseCounter, IHasProgress
         
         _cookingProgress += Time.deltaTime;
         CookingRecipeScriptableObject cookingRecipeSO = GetCookingRecipeSOWithInput(_currentKitchenSO);
+        
+        // No cooking recipe for this object
+        if (cookingRecipeSO == null)
+        {
+            return;
+        }
 
         // Not cooked yet
-        if (cookingRecipeSO == null || _cookingProgress <= cookingRecipeSO.cookingTimerTarget)
+        if (_cookingProgress <= cookingRecipeSO.cookingTimerTarget)
         {
             OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
             {
