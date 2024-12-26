@@ -5,7 +5,6 @@ using System;
 public class StoveCounter : BaseCounter, IHasProgress
 {
     public event EventHandler<OnCookingNotBurnedEventArgs> OnCookingNotBurned;
-
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     public class OnCookingNotBurnedEventArgs : EventArgs
     {
@@ -13,7 +12,6 @@ public class StoveCounter : BaseCounter, IHasProgress
         public bool isCookable;
     }
     [SerializeField] private CookingRecipeScriptableObject[] _cookingRecipeSOArray;
-    
     private KitchenScriptableObject _currentKitchenSO;
     private float _cookingProgress;
     private float _lastCookingProgress = 0.0f;
@@ -21,7 +19,6 @@ public class StoveCounter : BaseCounter, IHasProgress
     private const float INITIAL_PROGRESS = 0.0f;
 
     private const string PATTY_BURNED = "PattyBurned";
-
     private bool _isBurned = false;
 
     public override void Interact(Player player)
@@ -32,9 +29,9 @@ public class StoveCounter : BaseCounter, IHasProgress
         {
             // Sets the player as the object's parent and resets
             // private variables
+            GetKitchenObject().SetCookedPercentage(_cookingProgress / GetProgressBarTarget());
             GetKitchenObject().SetKitchenObjectParent(player);
             _currentKitchenSO = null;
-            _lastCookingProgress = _cookingProgress;
             return;
         }
 
@@ -46,11 +43,11 @@ public class StoveCounter : BaseCounter, IHasProgress
             // And resets the cooking progress
             player.GetKitchenObject().SetKitchenObjectParent(this);
             _currentKitchenSO = GetKitchenObject().KitchenSO;
-            _cookingProgress = _lastCookingProgress;
+            _cookingProgress = GetKitchenObject().GetCookedPercentage() * GetProgressBarTarget();
             OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
             {
                 progressNormalized =
-                    _cookingProgress / GetCookingRecipeSOWithInput(_currentKitchenSO).cookingTimerTarget
+                    _cookingProgress / GetProgressBarTarget()
             });
             return;
         }

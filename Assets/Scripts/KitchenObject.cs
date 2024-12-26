@@ -18,6 +18,8 @@ public class KitchenObject : MonoBehaviour
     /// The kitchen scriptable object getter
     /// </summary>
     public KitchenScriptableObject KitchenSO => _kitchenSO;
+    
+    private float _cookedPercentage = 0.0f;
 
     /// <summary>
     /// Sets the kitche object parent for this kitchen object
@@ -66,6 +68,18 @@ public class KitchenObject : MonoBehaviour
     {
         _kitchenObjectParent.ClearKitchenObject();
         Destroy(gameObject);
+    }
+
+    public void SetCookedPercentage(float percentage)
+    {
+        if (percentage < 0) percentage = 0;
+        if (percentage > 1) percentage = 1;
+        _cookedPercentage = percentage;
+    }
+
+    public float GetCookedPercentage()
+    {
+        return _cookedPercentage;
     }
 
     /// <summary>
