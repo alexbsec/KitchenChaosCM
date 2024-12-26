@@ -8,4 +8,5 @@ public class KitchenScriptableObject : ScriptableObject
     public Transform prefab;
     public Sprite sprite;
     public string objectName;
+    public bool cookable;
 }

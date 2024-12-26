@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7e6bc56fddfbed8bee8220cbbe4fc2, type: 3}
+  m_Name: PattyUncooked_ToPattyCooked
+  m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: bb1344f2b031bf743893aa6b44512922, type: 2}
+  output: {fileID: 11400000, guid: d8087809fe9515f609182334a6582683, type: 2}
+  cookingTimerTarget: 5

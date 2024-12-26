@@ -3,22 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CuttingCounter : BaseCounter
+public class CuttingCounter : BaseCounter, IHasProgress
 {
     public event EventHandler OnCut;
     
     /// <summary>
     /// Event handler for progress bar
     /// </summary>
-    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
-
-    /// <summary>
-    /// Custom event args
-    /// </summary>
-    public class OnProgressChangedEventArgs : EventArgs
-    {
-        public float progressNormalized;
-    }
+    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
+    
     
     /// <summary>
     /// The cutting recipes (some objects cannot be sliced)
@@ -184,7 +177,7 @@ public class CuttingCounter : BaseCounter
             _isFirstFire = true;
         }
 
-        OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs
+        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
         {
            progressNormalized = pNormalized
         });
