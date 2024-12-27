@@ -55,6 +55,12 @@ public class CuttingCounter : BaseCounter, IHasProgress
             _isFirstFire = false;
             return;
         }
+
+        if (HasKitchenObject() && player.HasKitchenObject())
+        {
+            TryPlaceOnPlate(player);
+            return;
+        }
     }
 
     /// <summary>
@@ -100,7 +106,24 @@ public class CuttingCounter : BaseCounter, IHasProgress
         KitchenObject.SpawnKitchenObject(outputKitchenSO, this);
         _currentKitchenSO = outputKitchenSO;
     }
-    
+
+
+    private void TryPlaceOnPlate(Player player)
+    {
+        bool destroyObjectOnCounter = false;
+        PlateKitchenObject plateKitchenObject;
+
+        if (player.GetKitchenObject().TryGetPlate(out plateKitchenObject))
+        {
+            plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
+            destroyObjectOnCounter = plateKitchenObject.TryAddIngredient(GetKitchenObject().KitchenSO);
+        }
+
+        if (destroyObjectOnCounter)
+        {
+            GetKitchenObject().SelfDestroy();
+        }
+    }
 
     /// <summary>
     /// Gets the cutting recipe scriptable object of the passed kitchen

@@ -50,6 +50,12 @@ public class StoveCounter : BaseCounter, IHasProgress
             });
             return;
         }
+
+        if (HasKitchenObject() && player.HasKitchenObject())
+        {
+            TryPlaceOnPlate(player);
+            return;
+        }
     }
     
     private void Update()
@@ -141,5 +147,22 @@ public class StoveCounter : BaseCounter, IHasProgress
         }
 
         return cookingRecipeSO.cookingTimerTarget;
+    }
+    
+    private void TryPlaceOnPlate(Player player)
+    {
+        bool destroyObjectOnCounter = false;
+        PlateKitchenObject plateKitchenObject;
+
+        if (player.GetKitchenObject().TryGetPlate(out plateKitchenObject))
+        {
+            plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
+            destroyObjectOnCounter = plateKitchenObject.TryAddIngredient(GetKitchenObject().KitchenSO);
+        }
+        
+        if (destroyObjectOnCounter)
+        {
+            GetKitchenObject().SelfDestroy();
+        }
     }
 }
