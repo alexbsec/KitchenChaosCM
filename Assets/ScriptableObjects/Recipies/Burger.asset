@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5827ed98f3145d1e880dee5275e827b2, type: 2}
   - {fileID: 11400000, guid: d8087809fe9515f609182334a6582683, type: 2}
   recipeName: Burger
+  recipePrice: 8.99

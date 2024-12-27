@@ -1,15 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
+    public event EventHandler OnRecipeSpawned;
+    public event EventHandler<OnRecipeCompletedEventArgs> OnRecipeCompleted;
+
+    public class OnRecipeCompletedEventArgs : EventArgs
+    {
+        public float recipePrice;
+        public bool correctDelivery;
+    }
     public static DeliveryManager Instance { get; private set; }
     [SerializeField] private RecipeListScriptableObject _recipeListSO;
     private List<RecipeScriptableObject> _waitingRecipeSOList;
     private float _spawnRecipeTimer;
-    private float _spawnRecipeTimerMax = 4f;
+    private float _spawnRecipeTimerMax = 10f;
     private int _waitingMax = 4;
+
+    private float _lostMoneyValue = 4.99f;
 
     private void Awake()
     {
@@ -30,9 +41,10 @@ public class DeliveryManager : MonoBehaviour
         if (_waitingRecipeSOList.Count < _waitingMax)
         {
             RecipeScriptableObject waitingRecipeSO = _recipeListSO.recipeScriptableObjectList[
-                Random.Range(0, _recipeListSO.recipeScriptableObjectList.Count)];
-            Debug.Log(waitingRecipeSO.recipeName);
+                UnityEngine.Random.Range(0, _recipeListSO.recipeScriptableObjectList.Count)];
             _waitingRecipeSOList.Add(waitingRecipeSO);
+            
+            OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -73,14 +85,25 @@ public class DeliveryManager : MonoBehaviour
             if (plateContentsMatchesRecipe)
             {
                 // Deliver was successfull (correct recipe)
-                Debug.Log("Correct recipe!");
                 _waitingRecipeSOList.RemoveAt(i);
+                OnRecipeCompleted?.Invoke(this, new OnRecipeCompletedEventArgs
+                {
+                    recipePrice = waitingRecipeSO.recipePrice,
+                    correctDelivery = true
+                });
                 return;
             }
         }
         
-        // no matches
-        Debug.Log("Failed to deliver recipe!");
+        OnRecipeCompleted?.Invoke(this, new OnRecipeCompletedEventArgs
+        {
+            recipePrice = _lostMoneyValue,
+            correctDelivery = false
+        });
     }
 
+    public List<RecipeScriptableObject> GetWaitingRecipeSOList()
+    {
+        return _waitingRecipeSOList;
+    }
 }
